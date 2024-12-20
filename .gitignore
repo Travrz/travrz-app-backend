@@ -1,2 +1,4 @@
-app/venv/
+venv/
 *.pyc
+*.sqlite3
+.env
