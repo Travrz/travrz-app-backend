@@ -9,12 +9,18 @@ services:
         - DEV=true
     ports:
       - "8000:8000"
+    command: >
+      sh -c "python manage.py wait_for_db &&
+             python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
     environment:
-      - PG_USER=postgres
-      - PG_PASSWORD=postgres
-      - PG_DB=postgres
-      - PG_HOST=db
-      - PG_PORT=5432
+      - DB_ENGINE=django.db.backends.postgresql
+      - DB_NAME=postgres
+      - DB_HOST=travrz-dev-db
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_PORT=5432
+      - DEBUG=1
     depends_on:
       - travrz-dev-db
   travrz-dev-db:
@@ -27,7 +33,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - dev-db-data:/var/lib/postgresql/data
 
 volumes:
-  pgdata: {}
+  dev-db-data: {}
