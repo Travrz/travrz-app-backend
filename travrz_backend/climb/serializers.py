@@ -14,7 +14,7 @@ class TagSerializer(serializers.ModelSerializer):
         model = Tag
         fields = [
             "id",
-            "tag_name",
+            "name",
             "created_at",
         ]
         read_only_fields = ["id", "created_at"]
@@ -41,7 +41,7 @@ class ClimbSerializer(serializers.ModelSerializer):
         tags = validated_data.pop("tags", [])
         climb = Climb.objects.create(**validated_data)
         for tag in tags:
-            tag_obj, _ = Tag.objects.get_or_create(tag_name=tag["tag_name"])
+            tag_obj, _ = Tag.objects.get_or_create(name=tag["name"])
             climb.tags.add(tag_obj)
 
         return climb
@@ -51,7 +51,7 @@ class ClimbSerializer(serializers.ModelSerializer):
         climb = super().update(instance, validated_data)
         climb.tags.clear()
         for tag in tags:
-            tag_obj, _ = Tag.objects.get_or_create(tag_name=tag["tag_name"])
+            tag_obj, _ = Tag.objects.get_or_create(name=tag["name"])
             climb.tags.add(tag_obj)
 
         return climb

@@ -88,6 +88,61 @@ class User(AbstractBaseUser):
 class Climb(models.Model):
     """Climb object."""
 
+    class Grade(models.TextChoices):
+        """Enum for climb grades."""
+
+        # indoor
+        V0 = "V0", "V0"
+        V1 = "V1", "V1"
+        V2 = "V2", "V2"
+        V3 = "V3", "V3"
+        V4 = "V4", "V4"
+        V5 = "V5", "V5"
+        V6 = "V6", "V6"
+        V7 = "V7", "V7"
+        V8 = "V8", "V8"
+        V9 = "V9", "V9"
+        V10 = "V10", "V10"
+        V11 = "V11", "V11"
+        V12 = "V12", "V12"
+        V13 = "V13", "V13"
+        V14 = "V14", "V14"
+        V15 = "V15", "V15"
+        V16 = "V16", "V16"
+        V17 = "V17", "V17"
+        V18 = "V18", "V18"
+
+        # outdoor
+        F5_5 = "5.5", "5.5"
+        F5_6 = "5.6", "5.6"
+        F5_7 = "5.7", "5.7"
+        F5_8 = "5.8", "5.8"
+        F5_9 = "5.9", "5.9"
+        F5_10a = "5.10a", "5.10a"
+        F5_10b = "5.10b", "5.10b"
+        F5_10c = "5.10c", "5.10c"
+        F5_10d = "5.10d", "5.10d"
+        F5_11a = "5.11a", "5.11a"
+        F5_11b = "5.11b", "5.11b"
+        F5_11c = "5.11c", "5.11c"
+        F5_11d = "5.11d", "5.11d"
+        F5_12a = "5.12a", "5.12a"
+        F5_12b = "5.12b", "5.12b"
+        F5_12c = "5.12c", "5.12c"
+        F5_12d = "5.12d", "5.12d"
+        F5_13a = "5.13a", "5.13a"
+        F5_13b = "5.13b", "5.13b"
+        F5_13c = "5.13c", "5.13c"
+        F5_13d = "5.13d", "5.13d"
+        F5_14a = "5.14a", "5.14a"
+        F5_14b = "5.14b", "5.14b"
+        F5_14c = "5.14c", "5.14c"
+        F5_14d = "5.14d", "5.14d"
+        F5_15a = "5.15a", "5.15a"
+        F5_15b = "5.15b", "5.15b"
+        F5_15c = "5.15c", "5.15c"
+        F5_15d = "5.15d", "5.15d"
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     climb_name = models.CharField(max_length=100)
     location = models.CharField(max_length=100)
@@ -96,6 +151,7 @@ class Climb(models.Model):
     media_url = models.URLField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     rating = models.FloatField(default=0)
+    private = models.BooleanField(default=False)
 
     tags = models.ManyToManyField("Tag")
 
@@ -103,8 +159,8 @@ class Climb(models.Model):
 class Tag(models.Model):
     """Tags for filtering climbs."""
 
-    tag_name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.tag_name
+        return self.name

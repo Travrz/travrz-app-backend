@@ -10,7 +10,7 @@ from climb import views
 router = DefaultRouter()
 # will create the following routes for us automatically
 # based on the viewset actions we've defined
-router.register("climbs", views.ClimbViewSet)
+router.register("", views.ClimbViewSet)
 router.register("tags", views.TagViewSet)
 
 app_name = "climb"
